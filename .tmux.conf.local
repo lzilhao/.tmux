@@ -29,7 +29,7 @@ tmux_conf_new_pane_retain_current_path=true
 # new pane tries to reconnect ssh sessions (experimental), possible values are:
 #   - true
 #   - false (default)
-tmux_conf_new_pane_reconnect_ssh=false
+tmux_conf_new_pane_reconnect_ssh=true
 
 # prompt for session name when creating a new session, possible values are:
 #   - true
@@ -157,18 +157,18 @@ tmux_conf_theme_right_separator_sub='|'
 #     - #{uptime_s}
 #     - #{username}
 #     - #{username_ssh}
-tmux_conf_theme_status_left=' ❐ #S | ↑#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} '
-tmux_conf_theme_status_right='#{prefix}#{pairing} #{?battery_status, #{battery_status},}#{?battery_bar, #{battery_bar},}#{?battery_percentage, #{battery_percentage},} , %R , %d %b | #{username}#{root} | #{hostname} '
+tmux_conf_theme_status_left=' ❐ #S |'" W:#(ip addr show dev wlp1s0 | grep "inet[^6]" | awk '{print $2}')|"" E:#(ip addr show dev enx00e102004274 | grep "inet[^6]" | awk '{print $2}')|"
+tmux_conf_theme_status_right=' #{username}#{root} | #{hostname} '
 
 # status left style
-tmux_conf_theme_status_left_fg='#000000,#e4e4e4,#e4e4e4'  # black, white , white
-tmux_conf_theme_status_left_bg='#ffff00,#ff00af,#00afff'  # yellow, pink, white blue
+tmux_conf_theme_status_left_fg='#000000,#e4e4e4,#5fff00,#e4e4e4'  # black, white, green, white
+tmux_conf_theme_status_left_bg='#ffff00,#000000,#000000,#00afff'  # yellow, black, black, white blue
 tmux_conf_theme_status_left_attr='bold,none,none'
 
 # status right style
-tmux_conf_theme_status_right_fg='#8a8a8a,#e4e4e4,#000000' # light gray, white, black
-tmux_conf_theme_status_right_bg='#080808,#d70000,#e4e4e4' # dark gray, red, white
-tmux_conf_theme_status_right_attr='none,none,bold'
+tmux_conf_theme_status_right_fg='#e4e4e4,#000000' # white, black
+tmux_conf_theme_status_right_bg='#d70000,#e4e4e4' # red, white
+tmux_conf_theme_status_right_attr='none,bold'
 
 # pairing indicator
 tmux_conf_theme_pairing='👓 '          # U+1F453
@@ -264,4 +264,46 @@ tmux_conf_copy_to_os_clipboard=false
 # bind C-a send-prefix
 
 # move status line to top
-#set -g status-position top
+set -g status-position top
+
+# New splits
+bind | split-window -h
+bind - split-window -v
+unbind '"'
+unbind %
+
+# change keybinding for window commands
+
+bind x kill-window
+bind k kill-pane
+bind -n C-PgUp previous-window
+bind -n C-PgDn next-window
+bind -n C-t new-window
+#Not working
+#unbind S-C-t new-window
+#unbind S-C-w kill-window
+#bind -n C-S-w kill-window
+#bind -n C-S-t new-window
+
+
+# Use Alt-arrow keys without prefix key to switch panes
+# NOTE: I removed these because they interfered with emacs
+#bind -n M-Left select-pane -L
+#bind -n M-Right select-pane -R
+#bind -n M-Up select-pane -U
+#bind -n M-Down select-pane -D
+# Use shift pg to move windows
+bind -n S-PgUp swap-window -t -1
+bind -n S-PgDn swap-window -t +1
+
+# Makes Ctrl+b b send prefix to nested sessions
+bind-key b send-prefix
+
+# Ctrl+b = synchronizes panes
+bind = set -g synchronize-panes
+#Experiment to improve nested sessions
+#bind-key b send-prefix \; send-keys |
+
+# tirar o tempo de espera depois do prefix
+set-option -g repeat-time 0
+
