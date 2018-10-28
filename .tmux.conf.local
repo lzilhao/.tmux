@@ -275,7 +275,7 @@ unbind %
 # change keybinding for window commands
 
 bind k kill-window
-#bind x kill-pane
+bind x kill-pane
 bind -n C-PgUp previous-window
 bind -n C-PgDn next-window
 bind -n C-t new-window
