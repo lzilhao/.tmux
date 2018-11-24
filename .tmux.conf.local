@@ -319,3 +319,5 @@ bind -T off F10 \
   set -u prefix \;\
   set -u key-table \;\
   set -u status-style \;\
+
+bind e set-window-option synchronize-panes
