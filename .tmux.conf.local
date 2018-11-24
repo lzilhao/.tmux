@@ -300,7 +300,7 @@ bind -n S-PgDn swap-window -t +1
 bind-key b send-prefix
 
 # Ctrl+b = synchronizes panes
-bind = set -g synchronize-panes
+# bind = set -g synchronize-panes
 #Experiment to improve nested sessions
 #bind-key b send-prefix \; send-keys |
 
