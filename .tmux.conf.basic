@@ -43,17 +43,4 @@ bind-key b send-prefix
 # tirar o tempo de espera depois do prefix
 set-option -g repeat-time 0
 
-#para desactivar a sessão mais alta quando estão nested
-
-bind -T root F9  \
-  set prefix None \;\
-  set key-table off \;\
-  set status-style "fg=white,bg=white" \;\
-  if -F '#{pane_in_mode}' 'send-keys -X cancel' \;\
-
-bind -T off F9 \
-  set -u prefix \;\
-  set -u key-table \;\
-  set -u status-style \;\
-
 bind e set-window-option synchronize-panes
