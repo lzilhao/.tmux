@@ -1,0 +1,46 @@
+
+# move status line to top
+set -g status-position top
+
+# New splits
+bind | split-window -h
+bind - split-window -v
+unbind '"'
+unbind %
+
+# change keybinding for window commands
+
+bind k kill-window
+bind x kill-pane
+bind -n C-PgUp previous-window
+bind -n C-PgDn next-window
+bind -n C-t new-window
+#Not working
+#unbind S-C-t new-window
+#unbind S-C-w kill-window
+#bind -n C-S-w kill-window
+#bind -n C-S-t new-window
+
+
+# Use Alt-arrow keys without prefix key to switch panes
+# NOTE: I removed these because they interfered with emacs
+#bind -n M-Left select-pane -L
+#bind -n M-Right select-pane -R
+#bind -n M-Up select-pane -U
+#bind -n M-Down select-pane -D
+# Use shift pg to move windows
+bind -n S-PgUp swap-window -t -1
+bind -n S-PgDn swap-window -t +1
+
+# Makes Ctrl+b b send prefix to nested sessions
+bind-key b send-prefix
+
+# Ctrl+b = synchronizes panes
+# bind = set -g synchronize-panes
+#Experiment to improve nested sessions
+#bind-key b send-prefix \; send-keys |
+
+# tirar o tempo de espera depois do prefix
+set-option -g repeat-time 0
+
+bind e set-window-option synchronize-panes
