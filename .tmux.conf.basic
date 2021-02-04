@@ -44,3 +44,5 @@ bind-key b send-prefix
 set-option -g repeat-time 0
 
 bind e set-window-option synchronize-panes
+
+set -g default-terminal "screen-256color"
